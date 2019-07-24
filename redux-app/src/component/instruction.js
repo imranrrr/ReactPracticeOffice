@@ -2,16 +2,16 @@ import React from 'react';
 import logo from '../logo.svg';
 import '../App.css';
 import {connect} from 'react-redux';
-import {start_game,cancel_game,expandInstruction,cancelInstruction} from '../action/setting';
+import {cancelInstruction,expandInstruction} from '../action/setting';
 import App from './App';
 class instruction extends React.Component {
   
   render(){
-  console.log("this",this);
+ // console.log("this",this);
   return (
     <div>
       <div className="game">
-        <App/>
+      
         <hr/>
       <h2>Game Instruction</h2>
       
@@ -24,7 +24,7 @@ class instruction extends React.Component {
               Here Expand Instruction!
               
             </h2>
-            <button onClick={this.props.expand}>collapse Instruction</button>
+            <button onClick={this.props.cancelIns}>collapse Instruction</button>
           </div>
         ):
         (
@@ -32,7 +32,7 @@ class instruction extends React.Component {
             <h2>
               Here Collapse Instruction!  
             </h2>
-            <button onClick={this.props.cancelIns}>Expand Instruction</button>
+            <button onClick={this.props.expand}>Expand Instruction</button>
           
           </div>
         )
@@ -52,7 +52,9 @@ const mapStateToProps=state=>{
 
 console.log('state',state);
 return{
-  instruction:state.instruction
+  instruction:state.Setting.instruction,
+  gameStarted:state.Setting.gameStarted
+  
 }
 
 };
@@ -60,13 +62,14 @@ const mapDispatchToProps=disptch=>{
    
   return{
   
-  expand:()=> disptch(cancelInstruction),
-  cancelIns:()=>disptch(expandInstruction)
+  expand:()=> disptch(expandInstruction()),
+  cancelIns:()=>disptch(cancelInstruction())
 
    };
 
 }
-const ComponentConnector=connect(mapStateToProps,mapDispatchToProps);
+const ComponentConnector=connect(mapStateToProps,
+  mapDispatchToProps);
 
 
 export default ComponentConnector(instruction);
